@@ -67,7 +67,6 @@ const checkRange = (guess: number[], correct:any) => {
         
     }
     else if (typeof correct === "number") {
-        console.log(guess, correct, inRange(correct, guess[0], guess[1]), colorMap["orange"])
         if (inRange(correct, guess[0], guess[1])) return colorMap["orange"]
     }
     return colorMap["red"]
@@ -100,14 +99,12 @@ const checkAnswer = (guess: any, correct: any, index: number) => {
     if (correct === "N/A") return colorMap["red"]
     if (guess === "N/A") return colorMap["red"]
     else if (typeof guess === "string" && index >= 3) {
-        console.log(guess)
         return checkTwoStepMove(guess, correct)
     }
     else if (typeof guess === "number"  && index >= 3) {
         return checkNumber(guess, correct)
     }
     else if (Array.isArray(guess)  && index >= 3) {
-        console.log("check", guess)
         return checkRange(guess, correct)
     }
     return colorMap["red"]
@@ -159,6 +156,7 @@ export default function BoardRow({
                                         checkAnswer(guess,answer[index], index)
                     }}
                 >
+
                     {   
                     //reveal answer for 3rd guess onwards
                         rowIndex >= revealCharFromIndex && index === 0 && currentGuessIndex === rowIndex   ? answer[index] :

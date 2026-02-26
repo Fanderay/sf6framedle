@@ -63,6 +63,7 @@ export default function Game() {
         }
         else if (currentGuessIndex + 1 >= maxRow ) {
             setIsLose(true)
+            setCurrentGuessIndex(c => (c + 1))
         }
         else {
             setCurrentGuessIndex(c => (c + 1))
