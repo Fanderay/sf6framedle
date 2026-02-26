@@ -124,18 +124,15 @@ export default function BoardRow({
     answer,
     currentGuessIndex,
     rowIndex,
-    // Reveal from which index
-    revealCharFromIndex,
-    // Reveal up to which index
-    revealStartupFromIndex
+    // Reveal from which index for which rowIndex
+    revealIndexFromIndex 
 }: { 
     rowState: any[],
     answer: any[],
     currentGuess: any[],
     currentGuessIndex: number,
     rowIndex: number,
-    revealCharFromIndex : number,
-    revealStartupFromIndex: number
+    revealIndexFromIndex : (number|null)[]
 }) {
 
     return (
@@ -143,27 +140,24 @@ export default function BoardRow({
 
         
             (rowIndex === currentGuessIndex ? currentGuess : rowState).map((guess, index) => {
+                const revealIndex = revealIndexFromIndex[index]
+                const showHint = currentGuessIndex === rowIndex && typeof revealIndex === "number" && rowIndex >= revealIndex
                 return <div
                     key ={index}
                     style = {{
                         backgroundColor: 
-                            rowIndex >= revealCharFromIndex && index === 0 && currentGuessIndex === rowIndex ? 
-                                colorMap["green"] :
-                                rowIndex >= revealStartupFromIndex && index === 3 && currentGuessIndex === rowIndex? 
-                                    colorMap["green"] :
+                            showHint ? 
+                                colorMap["green"]
+                                    :
                                     // If already guessed, check for answers
                                     rowIndex >= currentGuessIndex  ? 
                                         "transparent" : 
                                         checkAnswer(guess,answer[index], index)
                     }}
-                >
+                    >
 
                     {   
-                    //reveal answer for 3rd guess onwards
-                        rowIndex >= revealCharFromIndex && index === 0 && currentGuessIndex === rowIndex   ? answer[index] :
-                            rowIndex >= revealStartupFromIndex && index === 3 && currentGuessIndex === rowIndex ? 
-                                answer[index] :
-                                renderGuess(guess) ?? "?"
+                        showHint ? renderGuess(answer[index]) : renderGuess(guess) ?? "?"
                     }
                 </div>
             })

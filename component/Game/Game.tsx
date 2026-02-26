@@ -71,12 +71,12 @@ export default function Game() {
         }
         else if (currentGuessIndex + 1 >= maxRow ) {
             setIsLose(true)
-            setCurrentGuessIndex(c => (c + 1))
         }
         else {
-            setCurrentGuessIndex(c => (c + 1))
             setCurrentGuess(fill(Array(6), null))
         }
+
+        setCurrentGuessIndex(c => (c + 1))
 
     }
 
@@ -130,8 +130,7 @@ export default function Game() {
                             currentGuessIndex = {currentGuessIndex}
                             rowIndex = {index}
                             answer = {answer} 
-                            revealCharFromIndex = {3}
-                            revealStartupFromIndex = {2}
+                            revealIndexFromIndex={[1,null,null,2,null,4]}
                         />
                     })
                 }
@@ -142,9 +141,12 @@ export default function Game() {
         
 
             <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
-                <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
-                <span>{answer[0]} - {answer[1]}</span>
-                <span>Start up: {renderGuess(answer[3])} On block: {renderGuess(answer[4])} On hit: {renderGuess(answer[5])}</span>
+                <div>
+                    <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
+                    <span>{answer[0]} - {answer[1]}</span>
+                    <span>Start up: {renderGuess(answer[3])} On block: {renderGuess(answer[4])} On hit: {renderGuess(answer[5])}</span>
+                </div>
+                <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
             </div>
             
         </div>
