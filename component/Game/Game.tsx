@@ -5,6 +5,14 @@ import BoardRow from "../BoardRow/BoardRow";
 import GuessInput from "../GuessInput/GuessInput";
 import { fill } from "lodash";
 
+const renderGuess = (guess: any) => {
+    if (Array.isArray(guess)) {
+        return guess.join(" - ")
+    }
+    else return guess
+}
+
+
 const categories = [
     "Character",
     "Motion",
@@ -136,7 +144,7 @@ export default function Game() {
             <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
                 <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
                 <span>{answer[0]} - {answer[1]}</span>
-                <span>Start up: {answer[3]} On block: {answer[4]} On hit: {answer[5]}</span>
+                <span>Start up: {renderGuess(answer[3])} On block: {renderGuess(answer[4])} On hit: {renderGuess(answer[5])}</span>
             </div>
             
         </div>
