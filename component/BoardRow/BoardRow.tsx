@@ -144,6 +144,7 @@ export default function BoardRow({
         
             (rowIndex === currentGuessIndex ? currentGuess : rowState).map((guess, index) => {
                 return <div
+                    key ={index}
                     style = {{
                         backgroundColor: 
                             rowIndex >= revealCharFromIndex && index === 0 && currentGuessIndex === rowIndex ? 

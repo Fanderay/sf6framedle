@@ -106,8 +106,8 @@ export default function Game() {
             <div className = "game-table">
                 <>
                 {
-                    categories.map(category => {
-                        return <div className="game-head">{category}</div>
+                    categories.map((category, index) => {
+                        return <div key ={index} className="game-head">{category}</div>
                     })
                 }
                 </>
