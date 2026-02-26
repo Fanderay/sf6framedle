@@ -29,10 +29,6 @@ export default function RootLayout({
       >
         {children}
       </body>
-      <footer>
-        Made by Whale with no AI and with Zonate complaining about Lily in my ear. 
-        Support ya locals
-      </footer>
     </html>
   );
 }

@@ -19,10 +19,6 @@ export default function GuessInput({
     const [char, setChar] = useState(frameData[0].character)
 
 
-    const handleSubmit = () => {
-        onSubmit()
-    }
-
     const handleSelect = (e:any) => {
         const d = frameData.filter((({character}) => character === char))[e.target.value]
 
@@ -60,7 +56,6 @@ export default function GuessInput({
                 }
 
             </select>
-            <button onClick = {handleSubmit} disabled={disabled} className = "select-button">Submit</button>
         </div>
     )
 

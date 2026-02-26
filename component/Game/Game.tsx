@@ -98,6 +98,7 @@ export default function Game() {
 
     return (
         <div className = "game-container">
+            <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
             <div className = "input-container">
                 <GuessInput onGuess = {handleGuess} onSubmit = {handleGuessSubmit} disabled={currentGuess.some(a => !a) || isLose}/>
             </div>
@@ -126,10 +127,10 @@ export default function Game() {
                     })
                 }
                 </>
-
+                
             </div>
-
-            <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
+            <button onClick = {handleGuessSubmit} disabled={currentGuess.some(a => !a) || isLose} className = "select-button">Submit</button>
+        
 
             <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
                 <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
