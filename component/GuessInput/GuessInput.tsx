@@ -1,8 +1,9 @@
 
 'use client'
-import {useEffect, useState} from "react"
+import { uniqBy, values } from "lodash"
+import { useEffect, useState } from "react"
+import Select, { SingleValue } from "react-select"
 import frameData from "../../data/frameData.json"
-import { uniqBy } from "lodash"
 
 
 export default function GuessInput({
@@ -16,46 +17,67 @@ export default function GuessInput({
 })
  {
 
-    const [char, setChar] = useState(frameData[0].character)
+    const [char, setChar] = useState({label: frameData[0].character, value: frameData[0].character})
+    const [selectedGuess, setSelectedGuess] = useState<any>(null)
 
 
-    const handleSelect = (e:any) => {
-        const d = frameData.filter((({character}) => character === char))[e.target.value]
-
-        onGuess([
-            d.character,
-            d.moveMotion,
-            d.moveButton,
-            d.startUp,
-            d.onBlock,
-            d.onHit
-        ])
+    const handleSelect = (newVal: any) => {
+        setSelectedGuess(newVal)
     }
 
-    const handleCharSelect = (e:any) => {
-        setChar(e.target.value)
-        onGuess([null,null,null,null,null,null])
+    const handleCharSelect = (newVal: any) => {
+        setChar(newVal)
+        setSelectedGuess(null)
     }
+
+    useEffect(() => {
+        const d = selectedGuess?.value
+        let guess;
+        if (!d) guess = [null, null, null, null, null, null]
+        else {
+            guess = [
+                d.character,
+                d.moveMotion,
+                d.moveButton,
+                d.startUp,
+                d.onBlock,
+                d.onHit
+            ]
+        }
+        onGuess(guess)
+    }, [selectedGuess])
 
     return (
         <div className = "guess-input-container">
-            <select onChange = {handleCharSelect} defaultValue={"a.k.i"} className = "selector">
-                {
-                    uniqBy(frameData, "character").map(({character}, index)=> {
-                        return <option key = {index} value = {character}>{character}</option>
-                    })
+            <Select
+                options = {
+                    uniqBy(frameData, "character").map(({character})=> ({
+                        value: character,
+                        label: character
+                    })) 
                 }
-            </select>
-            <select onChange={handleSelect} className = "selector">
-                {
-                    frameData.filter((({character}) => character === char)).map((f, index) => {
-                        return (
-                            <option key = {index} value = {index}>{f.character} - {f.moveMotion}</option>
-                        )
-                    })
-                }
+                onChange = {handleCharSelect}
+                className = "selector"
+                value = {char}
+            />
 
-            </select>
+            <Select
+                options = {
+                    [
+                        ...frameData.filter((({character}) => character === char.value)).map((f) => {
+                            return {
+                                value: f,
+                                label: `${f.character} - ${f.moveMotion}`
+                            }
+                        })
+                    ]
+                    
+                }
+                onChange = {handleSelect}
+                value = {selectedGuess}
+                className = "selector selector-move"
+            />
+
         </div>
     )
 

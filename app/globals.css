@@ -101,11 +101,12 @@ footer {
 
 }
 .selector {
-  position: relative;
-  display: block;
-  margin: 0 auto;
+  color: black !important;
   font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
-  font-size: 18px;
+}
+
+.selector-move {
+    min-width: 200px;
 }
 
 .select-button {

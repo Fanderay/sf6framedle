@@ -137,7 +137,7 @@ export default function Game() {
                 </>
                 
             </div>
-            <button onClick = {handleGuessSubmit} disabled={currentGuess.some(a => !a) || isLose} className = "select-button">Submit</button>
+            <button onClick = {handleGuessSubmit} disabled={currentGuess.some(a => a === null) || isLose || isWin} className = "select-button">Submit</button>
         
 
             <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
