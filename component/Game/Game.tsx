@@ -37,16 +37,6 @@ export default function Game() {
         frameData[answerIndex].onHit
     ])
 
-
-    /* 
-        "character": "ryu",
-        "moveComand": "5",
-        "moveButton": "LP",
-        "startUp": "4",
-        "recovery": "7",
-        "onBlock": "-1",
-        "onHit": "+4",
-    */
     const [boardStates, setBoardState] = useState(fill(Array( maxRow), fill(Array(6), null)))
 
     const [currentGuess, setCurrentGuess] = useState(fill(Array(6), null))
@@ -109,7 +99,7 @@ export default function Game() {
         <div className = "game-container">
             <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
             <div className = "input-container">
-                <GuessInput onGuess = {handleGuess} onSubmit = {handleGuessSubmit} disabled={currentGuess.some(a => !a) || isLose}/>
+                <GuessInput onGuess = {handleGuess}/>
             </div>
             <div className = "game-table">
                 <>

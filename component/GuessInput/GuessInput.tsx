@@ -7,13 +7,9 @@ import frameData from "../../data/frameData.json"
 
 
 export default function GuessInput({
-    onGuess,
-    onSubmit,
-    disabled = false
+    onGuess
 }: {
-    onGuess: (guess:any[]) => void,
-    onSubmit: () => void,
-    disabled: boolean
+    onGuess: (guess:any[]) => void
 })
  {
 
@@ -27,7 +23,6 @@ export default function GuessInput({
 
     const handleCharSelect = (newVal: any) => {
         setChar(newVal)
-        setSelectedGuess(null)
     }
 
     useEffect(() => {
