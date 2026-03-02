@@ -99,7 +99,7 @@ export default function Game() {
         <div className = "game-container">
             <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
             <div className = "input-container">
-                <GuessInput onGuess = {handleGuess}/>
+                <GuessInput onGuess = {handleGuess} value = {currentGuess}/>
             </div>
             <div className = "game-table">
                 <>
