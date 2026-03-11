@@ -21,9 +21,11 @@ export default function Home() {
     "Dezza playing Resident Evil.",
     "Coffee fireball drive rushing.",
     "Dano hitting the delay round wave",
-    "Vollian collecting medals",
+    "Vollian wake up command grabbing",
     "Freeser butting heads",
     "June taking selfies",
+    "Noiscin cheering from the side line",
+    "Valerie beating me in tournament, what the fuck",
     "Chun fun burning out",
     "Bibek demon flipping",
     "LordP walking up and jabbing",
@@ -43,7 +45,7 @@ export default function Home() {
 
   return (
     <div className = "main">
-      <h1>SF6 Framedle</h1>
+      <h1>SF6 Framedle (Alpha Build)</h1>
 
       <Game/>
 
