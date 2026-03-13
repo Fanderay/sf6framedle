@@ -1,7 +1,7 @@
 'use client'
 import { FrameData } from "@/types/frameData";
 import { fill, isEqual } from "lodash";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import frameData from "../../data/frameData.json";
 import BoardRow from "../BoardRow/BoardRow";
 import GuessInput from "../GuessInput/GuessInput";
@@ -49,9 +49,9 @@ export default function Game() {
 
     
     const [showSettings, setShowSettings] = useState(false)
-    const [settings, setSettings] = useState<Setting>({...(getDefaultSettings()), ...JSON.parse(localStorage.getItem("settings") ?? "{}")})
+    const [settings, setSettings] = useState<Setting>()
 
-    const [answer, setAnswer] = useState<FrameData>(generateAnswer(settings))
+    const [answer, setAnswer] = useState<FrameData | null>(null)
 
     const [boardStates, setBoardState] = useState<(FrameData|null)[]>(defaultBoardState())
 
@@ -91,8 +91,10 @@ export default function Game() {
     const handleNewAnswer = () => {
         setBoardState(defaultBoardState())
 
-        setAnswer(generateAnswer(settings))
-
+        if (settings) {
+            setAnswer(generateAnswer(settings))
+        }
+    
         setCurrentGuess(null)
         setCurrentGuessIndex(0)
 
@@ -103,16 +105,27 @@ export default function Game() {
     useEffect(()=> {
         console.log(answer)
     }, [answer])
+
+    useEffect(() => {
+        setSettings({...(getDefaultSettings()), ...JSON.parse(localStorage.getItem("settings") ?? "{}")})
+    }, [])
+
+    useEffect(() => {
+        if (settings) {
+            setAnswer(generateAnswer(settings))
+        }
+    }, [settings])
     
 
     const handleSettingSave = (settings: Setting) => {
         setSettings(settings)
         localStorage.setItem("settings", JSON.stringify(settings))
-        setAnswer(generateAnswer(settings))
     }
 
+    if (!answer || !settings) return null
+
     return (
-        <div className = "game-container">
+         <div className = "game-container">
             <div>
                 <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
                 <button onClick = {() => setShowSettings(true)} className="new-answer-button">Settings</button>
