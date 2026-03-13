@@ -3,7 +3,11 @@
 import Game from "@/component/Game/Game";
 import { useState } from "react";
 import Image from 'next/image'
+import { testCorrect, testPartial, testHigherLower } from "@/tests/testFrameCompare";
 
+testPartial()
+testCorrect()
+testHigherLower()
 
 export default function Home() {
 
@@ -25,12 +29,11 @@ export default function Home() {
     "Freeser butting heads",
     "June taking selfies",
     "Noiscin cheering from the side line",
-    "Valerie beating me in tournament, what the fuck",
+    "Valerie rolling nat 1 on a chr check with +8",
     "Chun fun burning out",
     "Bibek demon flipping",
     "LordP walking up and jabbing",
     "Grove posting Elena tech on Twitter",
-    "RoF switching charactersm",
     "Fangrear dooming in #match-making",
     "Alter looking for sets",
     "Genja banning bots"
@@ -45,13 +48,13 @@ export default function Home() {
 
   return (
     <div className = "main">
-      <h1>SF6 Framedle (Alpha Build)</h1>
+      <h1>SF6 Framedle</h1>
 
       <Game/>
 
       <footer>
         <span>Made by Whale with <span onClick = {() => setShowJoshy(j => !j)}>no AI</span> and with {footerValues[randIndex]+ " "}</span>
-        <span onClick={handleClick}>Support ya locals</span>
+        <span onClick={handleClick} style ={{userSelect:"none", cursor:"pointer"}}>Support ya locals. Click me</span>
       </footer>
       {
         showJoshy ? <Image style ={{position:"absolute"}} height={"500"} width={"500"} src = {"/Screenshot 2026-02-26 194635.png"} alt = "JOSHY"/> : null

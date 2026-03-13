@@ -1,122 +1,109 @@
 'use client'
 
-import { inRange } from "lodash"
+import { useEffect, useState } from "react"
+import { FrameData, FrameValue  } from "@/types/frameData"
+import { FaCaretDown, FaCaretUp } from "react-icons/fa"
+
+import { isCorrect, isHigherLower, isPartial } from "@/utils/frameDataCompare"
+import { Setting } from "@/types/general"
 
 const colorMap =  {
-    "green" : "#1ea83cff",
-    "orange" : "#a37b0bff",
-    "red" : "#a31515ff"
+    "correct" : "#1ea83cff",
+    "partial" : "#a37b0bff",
+    "wrong" : "#a31515ff"
 }
 
-const getTwoStep = (val:string) => {
-    const twoStepMatchVal1 = val.match(/(\d*)\,(\d*)/)
 
-    if (twoStepMatchVal1?.[1] && twoStepMatchVal1?.[2]) {
-        return [parseInt(twoStepMatchVal1[1]), parseInt(twoStepMatchVal1[2])]
-    }
-    else {
-        console.error("I FUCKE DUIP")
-        return [0,0]
-    }
-}
+const getRenderStyle = (equalType: string, answer:FrameData[keyof FrameData], value:FrameData[keyof FrameData] | null, showTransprent: boolean) => {
 
-const checkTwoStepMove = (guess: any, correct: any) => {
-
-        const twoStepGuess = getTwoStep(guess)
-        if (Array.isArray(correct)) {
-                if (
-                    inRange(twoStepGuess[0],correct[0],correct[1]) || 
-                    inRange(twoStepGuess[1],correct[0],correct[1]) 
-                ) {
-                    return colorMap["orange"]
-                }
-                else return colorMap["red"]
-            }
-            else if (typeof correct === "string") {
-                const twoStepMatchVal1 = correct.match(/(\d*)\,(\d*)/)
-                if (twoStepGuess[0] === parseInt(twoStepMatchVal1?.[1] ?? "NaN")) return colorMap["orange"]
-                if (twoStepGuess[0] === parseInt(twoStepMatchVal1?.[2] ?? "NaN")) return colorMap["orange"]
-                if (twoStepGuess[1] === parseInt(twoStepMatchVal1?.[1] ?? "NaN")) return colorMap["orange"]
-                if (twoStepGuess[1] === parseInt(twoStepMatchVal1?.[2] ?? "NaN")) return colorMap["orange"]
-                return colorMap["red"]
-                
-            }
-            else if (typeof correct === "number") {
-                if (twoStepGuess.includes(correct)) return colorMap["orange"]
-                return colorMap["red"]
-            }
-            return colorMap["red"]
-
-
-}
-
-const checkRange = (guess: number[], correct:any) => {
-    if (Array.isArray(correct)) {
-        if (
-            (inRange(guess[0],correct[0],correct[1]) && inRange(guess[1],correct[0],correct[1]) )
-        ) {
-            return colorMap["orange"]
+    if (!value || showTransprent) {
+        return {
+            backgroundColor: "transparent"
         }
-        else return colorMap["red"]
     }
-    else if (typeof correct === "string") {
-        const twoStepMatchVal1 = correct.match(/(\d*)\,(\d*)/)
-        if (inRange(parseInt(twoStepMatchVal1?.[1] ?? "NaN"), guess[0], guess[1])) return colorMap["orange"]
-        if (inRange(parseInt(twoStepMatchVal1?.[2] ?? "NaN"), guess[0], guess[1])) return colorMap["orange"]
-        return colorMap["red"]
-        
-    }
-    else if (typeof correct === "number") {
-        if (inRange(correct, guess[0], guess[1])) return colorMap["orange"]
-    }
-    return colorMap["red"]
-}
 
-const checkNumber = (guess: number, correct: any) => {
+    if (equalType === "simple") {
+        if (answer === value) {
+            return { backgroundColor: colorMap.correct }
+        }
+        else return { backgroundColor: colorMap.wrong }
+    }
 
-        if (Array.isArray(correct)) {
-                if (
-                    inRange(guess,correct[0],correct[1])
-                ) {
-                    return colorMap["orange"]
-                }
-                else return colorMap["red"]
+    if (equalType === "frameData") {
+        if (isCorrect(value as FrameValue, answer as FrameValue)) {
+            return {
+                backgroundColor: colorMap.correct
             }
-            else if (typeof correct === "string") {
-                const twoStepMatchVal1 = correct.match(/(\d*)\,(\d*)/)
-                if (guess === parseInt(twoStepMatchVal1?.[1] ?? "NaN")) return colorMap["orange"]
-                if (guess === parseInt(twoStepMatchVal1?.[2] ?? "NaN")) return colorMap["orange"]
-                return colorMap["red"]
-                
+        }
+        if (isPartial(value as FrameValue, answer as FrameValue)) {
+            return {
+                backgroundColor: colorMap.partial
             }
-            return colorMap["red"]
+        }
+        return {
+            backgroundColor: colorMap.wrong
+        }
+
+    }
 
 
+    return {
+        backgroundColor: "transparent"
+    }
+
+    
 }
 
-const checkAnswer = (guess: any, correct: any, index: number) => {
-    if (guess === correct) return colorMap["green"]
-    if (correct === "N/A") return colorMap["red"]
-    if (guess === "N/A") return colorMap["red"]
-    else if (typeof guess === "string" && index >= 3) {
-        return checkTwoStepMove(guess, correct)
-    }
-    else if (typeof guess === "number"  && index >= 3) {
-        return checkNumber(guess, correct)
-    }
-    else if (Array.isArray(guess)  && index >= 3) {
-        return checkRange(guess, correct)
-    }
-    return colorMap["red"]
-
+// Returns a partial of frameData that is to be rendered.
+const getRevealedPropertyFrameData = (
+        revealPropertyFromIndex : {
+      [K in keyof Partial<FrameData>]: number | null
+    },
+        currentGuessIndex: number, 
+        answer: FrameData  )  : Partial<FrameData> => {
+    return Object.entries(revealPropertyFromIndex).reduce<Partial<FrameData>>((acc: Partial<FrameData>, [keyToReveal, indexToReveal]) => {
+        if (indexToReveal !== null && currentGuessIndex >= indexToReveal ) {
+            return {
+                ...acc, 
+                [keyToReveal]: answer[keyToReveal as keyof FrameData]
+            }
+        }
+        return {...acc}
+    }, {})
 }
 
-const renderGuess = (guess: any) => {
-    if (Array.isArray(guess)) {
-        return guess.join(" - ")
+const HigherLower = ({
+    rowIndex,
+    currentGuessIndex,
+    guessFrameData,
+    answerFrameData,
+    checkValue
+} : {
+    rowIndex : number,
+    currentGuessIndex : number
+    guessFrameData : FrameValue | null | undefined,
+    answerFrameData: FrameValue,
+    checkValue: string
+} ) : any  => {
+
+    // IM JANK I DONT CARE
+    if (checkValue !== "l" && checkValue !== "h") return <FaCaretDown style={{visibility:"hidden"}}/>
+
+    if (rowIndex < currentGuessIndex && guessFrameData && isHigherLower(guessFrameData, answerFrameData, checkValue)) {
+        if (checkValue === "l"){
+            return <FaCaretDown/>
+        }
+
+        else {
+            return <FaCaretUp/>
+        }
     }
-    else return guess
+
+    return <FaCaretDown style={{visibility:"hidden"}}/>
+    
 }
+
+
 
 export default function BoardRow({
     rowState,
@@ -125,42 +112,107 @@ export default function BoardRow({
     currentGuessIndex,
     rowIndex,
     // Reveal from which index for which rowIndex
-    revealIndexFromIndex 
+    revealPropertyFromIndex
 }: { 
-    rowState: any[],
-    answer: any[],
-    currentGuess: any[],
+    rowState: FrameData | null,
+    answer:  FrameData,
+    currentGuess:  FrameData | null,
     currentGuessIndex: number,
     rowIndex: number,
-    revealIndexFromIndex : (number|null)[]
+    revealPropertyFromIndex : {
+      [K in keyof Partial<FrameData>]: number | null
+    }
 }) {
 
-    return (
+    // The state that will be rendered
+    const [renderState, setRenderState] = useState<Partial<FrameData> | null>(null)
 
-
-        
-            (rowIndex === currentGuessIndex ? currentGuess : rowState).map((guess, index) => {
-                const revealIndex = revealIndexFromIndex[index]
-                const showHint = currentGuessIndex === rowIndex && typeof revealIndex === "number" && rowIndex >= revealIndex
-                return <div
-                    key ={index}
-                    style = {{
-                        backgroundColor: 
-                            showHint ? 
-                                colorMap["green"]
-                                    :
-                                    // If already guessed, check for answers
-                                    rowIndex >= currentGuessIndex  ? 
-                                        "transparent" : 
-                                        checkAnswer(guess,answer[index], index)
-                    }}
-                    >
-
-                    {   
-                        showHint ? renderGuess(answer[index]) : renderGuess(guess) ?? "?"
-                    }
-                </div>
+    useEffect(() => {
+        // This is the current guess
+        if (rowIndex === currentGuessIndex) {
+            if (!currentGuess) setRenderState(getRevealedPropertyFrameData(revealPropertyFromIndex, currentGuessIndex, answer))
+            else setRenderState({
+                character: currentGuess.character,
+                moveButton: currentGuess.moveButton,
+                moveMotion: currentGuess.moveMotion
             })
+        }
+        // This is an already submitted guess
+        else if (rowIndex < currentGuessIndex) {
+            setRenderState(rowState)
+        }
+        // This is a futureGuess
+        else if (rowIndex > currentGuessIndex) {
+            // Check if properties should be revealed.
+            setRenderState(getRevealedPropertyFrameData(revealPropertyFromIndex, currentGuessIndex, answer))
+        }
+        
+    }, [rowIndex, currentGuessIndex, revealPropertyFromIndex, answer])
+    
+
+    return (
+        <>
+            <div className = "board-row-item" style = {getRenderStyle("simple", answer.character, renderState?.character ?? null, !!currentGuess && rowIndex === currentGuessIndex)}>
+                {renderState?.character ?? "?"}
+            </div>
+            <div className = "board-row-item" style = {getRenderStyle("simple", answer.moveMotion, renderState?.moveMotion ?? null, !!currentGuess && rowIndex === currentGuessIndex)}>
+                {renderState?.moveMotion ?? "?"}
+            </div>
+            <div className = "board-row-item" style = {getRenderStyle("simple", answer.moveButton, renderState?.moveButton ?? null, !!currentGuess && rowIndex === currentGuessIndex)}>
+                {renderState?.moveButton?? "?"}
+            </div>
+            <div className = "board-row-item" style = {getRenderStyle("frameData", answer.startUp, renderState?.startUp ?? null, !!currentGuess && rowIndex === currentGuessIndex)}>
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.startUp}
+                    answerFrameData = {answer.startUp}
+                    checkValue = {"h"}
+                />
+                {renderState?.startUp?.rawValue ?? "?"}
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.startUp}
+                    answerFrameData = {answer.startUp}
+                    checkValue = {"l"}
+                />
+            </div>
+            <div className = "board-row-item" style = {getRenderStyle("frameData", answer.onBlock, renderState?.onBlock ?? null, !!currentGuess && rowIndex === currentGuessIndex)} >
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.onBlock}
+                    answerFrameData = {answer.onBlock}
+                    checkValue = {"h"}
+                />
+                {renderState?.onBlock?.rawValue ?? "?"}
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.onBlock}
+                    answerFrameData = {answer.onBlock}
+                    checkValue = {"l"}
+                />
+            </div>
+            <div className = "board-row-item" style = {getRenderStyle("frameData", answer.onHit, renderState?.onHit ?? null, !!currentGuess && rowIndex === currentGuessIndex)}>
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.onHit}
+                    answerFrameData = {answer.onHit}
+                    checkValue = {"h"}
+                />
+                {renderState?.onHit?.rawValue ?? "?"}
+                <HigherLower 
+                    rowIndex = {rowIndex}
+                    currentGuessIndex = {currentGuessIndex}
+                    guessFrameData = {renderState?.onHit}
+                    answerFrameData = {answer.onHit}
+                    checkValue = {"l"}
+                />
+            </div>
+        </>
         
 
 

@@ -1,16 +1,13 @@
 'use client'
+import { FrameData } from "@/types/frameData";
+import { fill, isEqual } from "lodash";
 import { useEffect, useState } from "react";
-import frameData from "../../data/frameData.json"
+import frameData from "../../data/frameData.json";
 import BoardRow from "../BoardRow/BoardRow";
 import GuessInput from "../GuessInput/GuessInput";
-import { fill } from "lodash";
+import SettingModal from "../SettingModal/SettingModal";
+import { Setting } from "@/types/general";
 
-const renderGuess = (guess: any) => {
-    if (Array.isArray(guess)) {
-        return guess.join(" - ")
-    }
-    else return guess
-}
 
 
 const categories = [
@@ -24,30 +21,51 @@ const categories = [
 
 const maxRow = 6
 
+const getDefaultSettings = () : Setting => ({
+    revealPropertyFromIndex : {
+        character: 3,
+        startUp: 5,
+        onBlock: 6,
+    },
+    allowedCharacters: null
+})
+
+const defaultBoardState = () : null[] => fill(new Array(maxRow), null)
+
+const generateAnswer = (setting: Setting) => {
+    const {allowedCharacters} = setting
+    const availableFrameData = frameData.filter(({character}) => {
+        if (allowedCharacters) {
+            return allowedCharacters.includes(character)
+        }
+        return true
+    })
+    const randIndex = Math.floor(Math.random() * availableFrameData.length)
+
+    return availableFrameData[randIndex]
+}
+
 export default function Game() {
 
-    const [answerIndex, setAnswerIndex] = useState(Math.floor(Math.random() * frameData.length))
+    
+    const [showSettings, setShowSettings] = useState(false)
+    const [settings, setSettings] = useState<Setting>({...(getDefaultSettings()), ...JSON.parse(localStorage.getItem("settings") ?? "{}")})
 
-    const [answer, setAnswer] = useState([
-        frameData[answerIndex].character,
-        frameData[answerIndex].moveMotion,
-        frameData[answerIndex].moveButton,
-        frameData[answerIndex].startUp,
-        frameData[answerIndex].onBlock,
-        frameData[answerIndex].onHit
-    ])
+    const [answer, setAnswer] = useState<FrameData>(generateAnswer(settings))
 
-    const [boardStates, setBoardState] = useState(fill(Array( maxRow), fill(Array(6), null)))
+    const [boardStates, setBoardState] = useState<(FrameData|null)[]>(defaultBoardState())
 
-    const [currentGuess, setCurrentGuess] = useState(fill(Array(6), null))
+    const [currentGuess, setCurrentGuess] = useState<FrameData|null>(null)
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0)
 
     const [isWin, setIsWin] = useState(false)
     const [isLose, setIsLose] = useState(false)
 
-    const handleGuess = (guess: any[]) => { 
+
+    const handleGuess = (guess : FrameData | null) => { 
         setCurrentGuess(guess)  
     }
+
     const handleGuessSubmit = () => {
         setBoardState(b => {
             let a = [...b]
@@ -56,14 +74,14 @@ export default function Game() {
             return a 
         })
 
-        if (currentGuess.every((g,index) => g === answer[index])) {
+        if (isEqual(answer, currentGuess)) {
             setIsWin(true)
         }
         else if (currentGuessIndex + 1 >= maxRow ) {
             setIsLose(true)
         }
         else {
-            setCurrentGuess(fill(Array(6), null))
+            setCurrentGuess(null)
         }
 
         setCurrentGuessIndex(c => (c + 1))
@@ -71,20 +89,11 @@ export default function Game() {
     }
 
     const handleNewAnswer = () => {
-        setBoardState(fill(Array( maxRow), fill(Array(6), null)))
-        const newAnswerIndex = Math.floor(Math.random() * frameData.length)
-        setAnswerIndex(newAnswerIndex)
+        setBoardState(defaultBoardState())
 
-        setAnswer([
-            frameData[newAnswerIndex].character,
-            frameData[newAnswerIndex].moveMotion,
-            frameData[newAnswerIndex].moveButton,
-            frameData[newAnswerIndex].startUp,
-            frameData[newAnswerIndex].onBlock,
-            frameData[newAnswerIndex].onHit
-        ])
+        setAnswer(generateAnswer(settings))
 
-        setCurrentGuess(fill(Array(6), null))
+        setCurrentGuess(null)
         setCurrentGuessIndex(0)
 
         setIsWin(false)
@@ -94,10 +103,26 @@ export default function Game() {
     useEffect(()=> {
         console.log(answer)
     }, [answer])
+    
+
+    const handleSettingSave = (settings: Setting) => {
+        setSettings(settings)
+        localStorage.setItem("settings", JSON.stringify(settings))
+        setAnswer(generateAnswer(settings))
+    }
 
     return (
         <div className = "game-container">
-            <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
+            <div>
+                <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
+                <button onClick = {() => setShowSettings(true)} className="new-answer-button">Settings</button>
+            </div>
+            {
+                settings.allowedCharacters ? <div>Limited to {settings?.allowedCharacters?.length ?? 0} character(s)</div>
+                    :
+                    null
+            }
+
             <div className = "input-container">
                 <GuessInput onGuess = {handleGuess} value = {currentGuess}/>
             </div>
@@ -120,21 +145,30 @@ export default function Game() {
                             currentGuessIndex = {currentGuessIndex}
                             rowIndex = {index}
                             answer = {answer} 
-                            revealIndexFromIndex={[1,null,null,2,null,4]}
+                            revealPropertyFromIndex={settings.revealPropertyFromIndex}
                         />
                     })
                 }
                 </>
                 
             </div>
-            <button onClick = {handleGuessSubmit} disabled={currentGuess.some(a => a === null) || isLose || isWin} className = "select-button">Submit</button>
-        
+            <button onClick = {handleGuessSubmit} disabled={!currentGuess || isLose || isWin} className = "select-button">Submit</button>
+            
+            <SettingModal 
+                maxRow={maxRow} 
+                settings={settings} 
+                isVisible = {showSettings} 
+                onSave = {handleSettingSave} 
+                onClose={() => setShowSettings(false)}
+                getDefaultSetting= {getDefaultSettings}
+            />
 
             <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
                 <div>
                     <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
-                    <span>{answer[0]} - {answer[1]}</span>
-                    <span>Start up: {renderGuess(answer[3])} On block: {renderGuess(answer[4])} On hit: {renderGuess(answer[5])}</span>
+                    <span>{answer.character} - {answer.moveName}</span>
+                    <span>{answer.moveMotion}</span>
+                    <span>Start up: {answer.startUp.rawValue} On block: {answer.onBlock.rawValue} On hit: {answer.onHit.rawValue}</span>
                 </div>
                 <button onClick = {handleNewAnswer} className="new-answer-button">Generate New Answer</button>
             </div>

@@ -5,18 +5,19 @@ import { useEffect, useState } from "react"
 import Select, { SingleValue } from "react-select"
 import frameData from "../../data/frameData.json"
 
+import { FrameData } from "@/types/frameData"
 
 export default function GuessInput({
     onGuess,
     value
 }: {
-    onGuess: (guess:any[]) => void,
-    value: any[]
+    onGuess: (guess:FrameData | null) => void,
+    value: FrameData | null
 })
  {
 
     const [char, setChar] = useState({label: frameData[0].character, value: frameData[0].character})
-    const [selectedGuess, setSelectedGuess] = useState<any>(null)
+    const [selectedGuess, setSelectedGuess] = useState<{label: string, value: FrameData} | null>(null)
 
 
     const handleSelect = (newVal: any) => {
@@ -28,7 +29,8 @@ export default function GuessInput({
     }
 
     useEffect(() => {
-        if (value.every(a => a === null)) {
+        if (value === null) {
+            
             setSelectedGuess(null)
         }
     }, [value])
@@ -36,16 +38,9 @@ export default function GuessInput({
     useEffect(() => {
         const d = selectedGuess?.value
         let guess;
-        if (!d) guess = [null, null, null, null, null, null]
+        if (!d) guess = null
         else {
-            guess = [
-                d.character,
-                d.moveMotion,
-                d.moveButton,
-                d.startUp,
-                d.onBlock,
-                d.onHit
-            ]
+            guess = d
         }
         onGuess(guess)
     }, [selectedGuess])
