@@ -83,7 +83,7 @@ export default function SettingModal({
     }
 
 
-    return <div className = "setting-modal" style ={{visibility: isVisible? "visible" : "hidden" }}>
+    return <div className = "setting-modal" style ={{display: isVisible? "block" : "none" }}>
         
         <div>
             <button onClick = {() => {onSave(curSetting);onClose();}}>Save</button>
@@ -107,7 +107,7 @@ export default function SettingModal({
             <label>On hit</label>
             <Select className="setting-select" options={revealOptions(maxRow)} value = {getOptionsValue(curSetting.revealPropertyFromIndex?.onHit ?? null)} onChange = {handleRevealSelect("onHit")}/>
         </div>
-        <label>Characters allowed</label>
+        <h3>Characters allowed</h3>
         <div className="settings-char-select">  
             <div>
                 <input type = "checkbox" checked = {curSetting?.allowedCharacters === null} onChange={handleAllCharCheck} />

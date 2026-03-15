@@ -3061,6 +3061,90 @@
   },
   {
     "character": "Blanka",
+    "moveName": "LK Vertical Rolling Attack",
+    "moveMotion": "28LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -27,
+      "rawValue": "-27"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 35,
+      "rawValue": "KD +35"
+    }
+  },
+  {
+    "character": "Blanka",
+    "moveName": "MK Vertical Rolling Attack",
+    "moveMotion": "28MK",
+    "moveButton": "MK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -27,
+      "rawValue": "-27"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 42,
+      "rawValue": "KD +42"
+    }
+  },
+  {
+    "character": "Blanka",
+    "moveName": "HK Vertical Rolling Attack",
+    "moveMotion": "28HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -27,
+      "rawValue": "-27"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 42,
+      "rawValue": "KD +42"
+    }
+  },
+  {
+    "character": "Blanka",
+    "moveName": "OD Vertical Rolling Attack",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "standard",
+      "value": 7,
+      "rawValue": "7"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -40,
+      "rawValue": "-40"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 28,
+      "rawValue": "KD + 28"
+    }
+  },
+  {
+    "character": "Blanka",
     "moveName": "LK Backstep Rolling Attack",
     "moveMotion": "624LK",
     "moveButton": "LK",
@@ -3687,27 +3771,6 @@
       "valueType": "standard",
       "value": 34,
       "rawValue": "KD +34"
-    }
-  },
-  {
-    "character": "C.Viper",
-    "moveName": "Jump HK",
-    "moveMotion": "7 or 9HK",
-    "moveButton": "HK",
-    "startUp": {
-      "valueType": "standard",
-      "value": 8,
-      "rawValue": "8"
-    },
-    "onBlock": {
-      "valueType": "standard",
-      "value": 6,
-      "rawValue": "6~11"
-    },
-    "onHit": {
-      "valueType": "standard",
-      "value": 11,
-      "rawValue": "11~16"
     }
   },
   {
@@ -5968,27 +6031,6 @@
   },
   {
     "character": "Chun-Li",
-    "moveName": "Jump HK",
-    "moveMotion": "7 or 9HK",
-    "moveButton": "HK",
-    "startUp": {
-      "valueType": "standard",
-      "value": 8,
-      "rawValue": "8"
-    },
-    "onBlock": {
-      "valueType": "standard",
-      "value": 4,
-      "rawValue": "4~12"
-    },
-    "onHit": {
-      "valueType": "standard",
-      "value": 8,
-      "rawValue": "8~16"
-    }
-  },
-  {
-    "character": "Chun-Li",
     "moveName": "Yoso Kick",
     "moveMotion": "2MK (air)",
     "moveButton": "MK",
@@ -6619,6 +6661,90 @@
   },
   {
     "character": "Chun-Li",
+    "moveName": "LK Spinning Bird Kick",
+    "moveMotion": "28LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 9,
+      "rawValue": "9"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -18,
+      "rawValue": "-18"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 33,
+      "rawValue": "KD +33"
+    }
+  },
+  {
+    "character": "Chun-Li",
+    "moveName": "MK Spinning Bird Kick",
+    "moveMotion": "28MK",
+    "moveButton": "MK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 16,
+      "rawValue": "16"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -17,
+      "rawValue": "-17"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 34,
+      "rawValue": "KD +34"
+    }
+  },
+  {
+    "character": "Chun-Li",
+    "moveName": "HK Spinning Bird Kick",
+    "moveMotion": "28HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 20,
+      "rawValue": "20"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -18,
+      "rawValue": "-18"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 33,
+      "rawValue": "KD +33"
+    }
+  },
+  {
+    "character": "Chun-Li",
+    "moveName": "OD Spinning Bird Kick",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "standard",
+      "value": 16,
+      "rawValue": "16"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -12,
+      "rawValue": "-12"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 55,
+      "rawValue": "KD +55"
+    }
+  },
+  {
+    "character": "Chun-Li",
     "moveName": "LK Hazanshu",
     "moveMotion": "214LK",
     "moveButton": "LK",
@@ -7144,6 +7270,48 @@
   },
   {
     "character": "Dee Jay",
+    "moveName": "Knee Shot",
+    "moveMotion": "9 > 2LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": 2,
+      "rawValue": "2(8)"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 5,
+      "rawValue": "5(11)"
+    }
+  },
+  {
+    "character": "Dee Jay",
+    "moveName": "Party in the Air",
+    "moveMotion": "8MP > 8HP",
+    "moveButton": "HP",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    }
+  },
+  {
+    "character": "Dee Jay",
     "moveName": "Sunrise Heel",
     "moveMotion": "6MK",
     "moveButton": "MK",
@@ -7446,6 +7614,90 @@
       "valueType": "standard",
       "value": 5,
       "rawValue": "5"
+    }
+  },
+  {
+    "character": "Dee Jay",
+    "moveName": "LK Jackknife Maximum",
+    "moveMotion": "28LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "23"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    }
+  },
+  {
+    "character": "Dee Jay",
+    "moveName": "MK Jackknife Maximum",
+    "moveMotion": "28MK",
+    "moveButton": "MK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -32,
+      "rawValue": "-32"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 41,
+      "rawValue": "KD +41"
+    }
+  },
+  {
+    "character": "Dee Jay",
+    "moveName": "HK Jackknife Maximum",
+    "moveMotion": "28HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 5,
+      "rawValue": "5"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -44,
+      "rawValue": "-44"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 42,
+      "rawValue": "KD +42"
+    }
+  },
+  {
+    "character": "Dee Jay",
+    "moveName": "OD Jackknife Maximum",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -55,
+      "rawValue": "-55"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "KD +23"
     }
   },
   {
@@ -9702,6 +9954,90 @@
       "valueType": "standard",
       "value": 36,
       "rawValue": "KD +36(37)"
+    }
+  },
+  {
+    "character": "E.Honda",
+    "moveName": "LK Sumo Smash",
+    "moveMotion": "28LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 11,
+      "rawValue": "11*41"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": 1,
+      "rawValue": "1"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "HKD +23(27)"
+    }
+  },
+  {
+    "character": "E.Honda",
+    "moveName": "MK Sumo Smash",
+    "moveMotion": "28MK",
+    "moveButton": "MK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 11,
+      "rawValue": "11*39"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": 1,
+      "rawValue": "1"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "HKD +23(27)"
+    }
+  },
+  {
+    "character": "E.Honda",
+    "moveName": "HK Sumo Smash",
+    "moveMotion": "28HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 11,
+      "rawValue": "11*37"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": 1,
+      "rawValue": "1"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "HKD +23(27)"
+    }
+  },
+  {
+    "character": "E.Honda",
+    "moveName": "OD Sumo Smash",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": 2,
+      "rawValue": "2"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 23,
+      "rawValue": "HKD +23(27)"
     }
   },
   {
@@ -13071,6 +13407,90 @@
       "valueType": "standard",
       "value": 48,
       "rawValue": "KD +48"
+    }
+  },
+  {
+    "character": "Guile",
+    "moveName": "LK Somersault Kick",
+    "moveMotion": "28LK",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 5,
+      "rawValue": "5"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -30,
+      "rawValue": "-30"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 36,
+      "rawValue": "KD +36"
+    }
+  },
+  {
+    "character": "Guile",
+    "moveName": "MK Somersault Kick",
+    "moveMotion": "28MK",
+    "moveButton": "MK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -31,
+      "rawValue": "-31"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 37,
+      "rawValue": "KD +37"
+    }
+  },
+  {
+    "character": "Guile",
+    "moveName": "HK Somersault Kick",
+    "moveMotion": "28HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 7,
+      "rawValue": "7"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -32,
+      "rawValue": "-32"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 39,
+      "rawValue": "KD +39"
+    }
+  },
+  {
+    "character": "Guile",
+    "moveName": "OD Somersault Kick",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "standard",
+      "value": 6,
+      "rawValue": "6"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -33,
+      "rawValue": "-33(-37)"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 29,
+      "rawValue": "KD +29"
     }
   },
   {
@@ -18115,6 +18535,27 @@
   },
   {
     "character": "Kimberly",
+    "moveName": "Step Up (neutral hop)",
+    "moveMotion": "6HK > 8",
+    "moveButton": "8",
+    "startUp": {
+      "valueType": "standard",
+      "value": 20,
+      "rawValue": "20"
+    },
+    "onBlock": {
+      "valueType": "standard",
+      "value": -22,
+      "rawValue": "-22"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": -10,
+      "rawValue": "-10"
+    }
+  },
+  {
+    "character": "Kimberly",
     "moveName": "Step Up (forward hop)",
     "moveMotion": "6HK > 9",
     "moveButton": "9",
@@ -22461,6 +22902,54 @@
       "valueType": "standard",
       "value": 55,
       "rawValue": "KD +55"
+    }
+  },
+  {
+    "character": "M.Bison",
+    "moveName": "Shadow Rise",
+    "moveMotion": "28K",
+    "moveButton": "LK",
+    "startUp": {
+      "valueType": "variableCharge",
+      "value": [
+        18,
+        46
+      ],
+      "rawValue": "18~46"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    }
+  },
+  {
+    "character": "M.Bison",
+    "moveName": "OD Shadow Rise",
+    "moveMotion": "28KK",
+    "moveButton": "2K",
+    "startUp": {
+      "valueType": "variableCharge",
+      "value": [
+        16,
+        42
+      ],
+      "rawValue": "16~42"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
     }
   },
   {
@@ -26978,6 +27467,27 @@
       "valueType": "standard",
       "value": -9,
       "rawValue": "-9(-1)"
+    }
+  },
+  {
+    "character": "Rashid",
+    "moveName": "Aerial Shot",
+    "moveMotion": "8 > 8HK",
+    "moveButton": "HK",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "standard",
+      "value": 12,
+      "rawValue": "+12(+15)"
     }
   },
   {
@@ -31587,6 +32097,27 @@
       "valueType": "standard",
       "value": 9,
       "rawValue": "9"
+    },
+    "onBlock": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    },
+    "onHit": {
+      "valueType": "none",
+      "value": null,
+      "rawValue": "N/A"
+    }
+  },
+  {
+    "character": "Zangief",
+    "moveName": "Flying Headbutt",
+    "moveMotion": "8 > 8HP",
+    "moveButton": "HP",
+    "startUp": {
+      "valueType": "standard",
+      "value": 8,
+      "rawValue": "8"
     },
     "onBlock": {
       "valueType": "none",

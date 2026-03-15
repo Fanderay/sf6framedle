@@ -65,7 +65,7 @@ export default function GuessInput({
                         ...frameData.filter((({character}) => character === char.value)).map((f) => {
                             return {
                                 value: f,
-                                label: `${f.character} - ${f.moveMotion}`
+                                label: `${f.character} - ${f.moveName} (${f.moveMotion})`
                             }
                         })
                     ]
