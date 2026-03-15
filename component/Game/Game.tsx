@@ -214,7 +214,7 @@ export default function Game() {
                 getDefaultSetting= {getDefaultSettings}
             />
 
-            <div className = "winner-modal" style ={{visibility: isWin || isLose || true  ? "visible" : "hidden" }}>
+            <div className = "winner-modal" style ={{visibility: isWin || isLose ? "visible" : "hidden" }}>
                 <div>
                     <span>YA {isWin ? "WIN" : isLose ? "LOSE" : "HOW THE FUCK DID YOU GET HERE "}. ANSWER WAS:</span>
                     <span>{answer.character} - {answer.moveName}</span>
