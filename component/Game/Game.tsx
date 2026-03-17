@@ -150,7 +150,7 @@ export default function Game() {
                 `${imageData?.[answer.character]?.folderPath}${answer.moveMotion.toLowerCase()}.png`,
                 `${imageData?.[answer.character]?.folderPath}${answer.moveName.toLowerCase()}.png`,
                 `${imageData?.[answer.character]?.folderPath}${answer.moveMotion.toLowerCase().replaceAll(">", "_").replace("(ca)", "_ca").replaceAll(" ", "")}.png`,
-                `${imageData?.[answer.character]?.folderPath}SF6_${answer.character}_${answer.moveMotion.toLowerCase().replaceAll(">", "_").replace("(ca)", "_ca").replaceAll(" ", "")}.png`
+                `${imageData?.[answer.character]?.folderPath}SF6_${answer.character.replaceAll(" ", "_")}_${answer.moveMotion.toLowerCase().replaceAll(">", "_").replace("(ca)", "_ca").replaceAll(" ", "")}.png`
             ])
         }
         
